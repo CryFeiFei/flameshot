@@ -64,10 +64,10 @@ void Controller::initDefaults() {
 void Controller::createVisualCapture(const uint id, const QString &forcedSavePath) {
     if (!m_captureWindow) {
         m_captureWindow = new CaptureWidget(id, forcedSavePath);
-        connect(m_captureWindow, &CaptureWidget::captureFailed,
-                this, &Controller::captureFailed);
-        connect(m_captureWindow, &CaptureWidget::captureTaken,
-                this, &Controller::captureTaken);
+        connect(m_captureWindow, SIGNAL(CaptureWidget::captureFailed),
+                this, SIGNAL(Controller::captureFailed));
+        connect(m_captureWindow, SIGNAL(CaptureWidget::captureTaken),
+                this, SIGNAL(Controller::captureTaken));
         m_captureWindow->showFullScreen();
     }
 }
@@ -118,7 +118,8 @@ void Controller::enableTrayIcon() {
             createVisualCapture();
         }
     };
-    connect(m_trayIcon, &QSystemTrayIcon::activated, this, trayIconActivated);
+    connect(m_trayIcon, SIGNAL(QSystemTrayIcon::activated), this, SLOT(createVisualCapture));
+    createVisualCapture();
     m_trayIcon->show();
 }
 
