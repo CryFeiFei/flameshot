@@ -60,6 +60,12 @@ void Controller::initDefaults() {
     }
 }
 
+// 自己定义显示截图的界面
+void Controller::showScreenShot()
+{
+    createVisualCapture();
+}
+
 // creation of a new capture in GUI mode
 void Controller::createVisualCapture(const uint id, const QString &forcedSavePath) {
     if (!m_captureWindow) {
@@ -92,6 +98,9 @@ void Controller::enableTrayIcon() {
         return;
     }
     ConfigHandler().setDisabledTrayIcon(false);
+    QAction *useIt = new QAction(tr("&useIt"), this);
+    connect(useIt, &QAction::triggered, this,
+            &Controller::showScreenShot);
     QAction *configAction = new QAction(tr("&Configuration"), this);
     connect(configAction, &QAction::triggered, this,
             &Controller::openConfigWindow);
@@ -103,6 +112,7 @@ void Controller::enableTrayIcon() {
             &QCoreApplication::quit);
 
     QMenu *trayIconMenu = new QMenu();
+    trayIconMenu->addAction(useIt);
     trayIconMenu->addAction(configAction);
     trayIconMenu->addAction(infoAction);
     trayIconMenu->addSeparator();
@@ -113,13 +123,13 @@ void Controller::enableTrayIcon() {
     m_trayIcon->setContextMenu(trayIconMenu);
     m_trayIcon->setIcon(QIcon(":img/flameshot.png"));
 
-    auto trayIconActivated = [this](QSystemTrayIcon::ActivationReason r){
-        if (r == QSystemTrayIcon::Trigger) {
-            createVisualCapture();
-        }
-    };
-    connect(m_trayIcon, SIGNAL(QSystemTrayIcon::activated), this, SLOT(createVisualCapture));
-    createVisualCapture();
+//    auto trayIconActivated = [this](QSystemTrayIcon::ActivationReason r){
+//        if (r == QSystemTrayIcon::Trigger) {
+//            createVisualCapture();
+//        }
+//    };
+//    connect(m_trayIcon, SIGNAL(QSystemTrayIcon::activated), this, SLOT(createVisualCapture));
+//    createVisualCapture();
     m_trayIcon->show();
 }
 

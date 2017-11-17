@@ -52,6 +52,8 @@ public slots:
 
     void updateConfigComponents();
 
+    void showScreenShot();
+
 private slots:
     void initDefaults();
 
