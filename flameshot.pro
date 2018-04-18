@@ -14,7 +14,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG    += c++11
 CONFIG    += link_pkgconfig
-
+QMAKE_CXXFLAGS += -std=c++0x
 #CONFIG    += packaging   # Enables "make install" for packaging paths
 
 TARGET = flameshot
@@ -32,8 +32,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-include(src/third-party/singleapplication/singleapplication.pri)
-include(src/third-party/Qt-Color-Widgets//color_widgets.pri)
+#include(src/third-party/singleapplication/singleapplication.pri)
+#include(src/third-party/Qt-Color-Widgets//color_widgets.pri)
 
 DEFINES += QAPPLICATION_CLASS=QApplication
 

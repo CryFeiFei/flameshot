@@ -32,7 +32,8 @@
 #include "src/utils/systemnotification.h"
 #include "src/core/resourceexporter.h"
 #include <QScreen>
-#include <QGuiApplication>
+//#include <QGuiApplication>
+#include <QDesktopWidget>
 #include <QApplication>
 #include <QShortcut>
 #include <QPainter>
@@ -74,7 +75,7 @@ CaptureWidget::CaptureWidget(const uint id, const QString &forcedSavePath,
     << &m_LHandle << &m_THandle << &m_RHandle << &m_BHandle;
 
     // set base config of the widget
-    setWindowFlags(Qt::BypassWindowManagerHint
+    setWindowFlags(Qt::X11BypassWindowManagerHint
                    | Qt::WindowStaysOnTopHint
                    | Qt::FramelessWindowHint
                    | Qt::Tool);
@@ -104,7 +105,8 @@ CaptureWidget::CaptureWidget(const uint id, const QString &forcedSavePath,
     m_colorPicker->hide();
 
     m_notifierBox = new NotifierBox(this);
-    auto geometry = QGuiApplication::primaryScreen()->geometry();
+//    auto geometry = QGuiApplication::primaryScreen()->geometry();
+	auto geometry = QApplication::desktop()->screenGeometry();
     m_notifierBox->move(geometry.left() +20, geometry.left() +20);
     m_notifierBox->hide();
 }
@@ -138,9 +140,13 @@ void CaptureWidget::updateButtons() {
         }
         b->setColor(m_uiColor);
 
-        connect(b, &CaptureButton::pressedButton, this, &CaptureWidget::setState);
-        connect(b->tool(), &CaptureTool::requestAction,
-                this, &CaptureWidget::handleButtonSignal);
+//        connect(b, &CaptureButton::pressedButton, this, &CaptureWidget::setState);
+
+	connect(b, SIGNAL(pressedButton(CaptureButton*)), this, SLOT(setState(CaptureButton*)));
+//        connect(b->tool(), &CaptureTool::requestAction,
+//                this, &CaptureWidget::handleButtonSignal);
+
+	connect(b->tool(), SIGNAL(requestAction(Request)), this, SLOT(handleButtonSignal(CaptureTool::Request)));
         vectorButtons << b;
     }
     m_buttonHandler->setButtons(vectorButtons);
@@ -178,7 +184,8 @@ void CaptureWidget::paintEvent(QPaintEvent *) {
     painter.setClipRect(rect());
 
     if (m_showInitialMsg) {
-        QRect helpRect = QGuiApplication::primaryScreen()->geometry();
+//        QRect helpRect = QGuiApplication::primaryScreen()->geometry();
+		QRect helpRect = QApplication::desktop()->screenGeometry();
 
         QString helpTxt = tr("Select an area with the mouse, or press Esc to exit."
                              "\nPress Enter to capture the screen."
@@ -651,8 +658,8 @@ void CaptureWidget::uploadToImgur() {
 QRect CaptureWidget::extendedSelection() const {
     if (m_selection.isNull())
         return QRect();
-    auto devicePixelRatio = m_screenshot->screenshot().devicePixelRatio();
-
+//    auto devicePixelRatio = m_screenshot->screenshot().devicePixelRatio();
+    auto devicePixelRatio = 1.0;
     return QRect(m_selection.left()   * devicePixelRatio,
                  m_selection.top()    * devicePixelRatio,
                  m_selection.width()  * devicePixelRatio,

@@ -43,6 +43,8 @@ private:
     QTimer *m_timer;
 
     void animatedShow();
+
+public slots:
     void animatedHide();
 
 };

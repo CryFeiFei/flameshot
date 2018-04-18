@@ -21,7 +21,8 @@
 #include "src/capture/widget/capturebutton.h"
 #include <QListWidget>
 
-class ButtonListView : public QListWidget {
+class ButtonListView : public QListWidget
+{
 public:
     ButtonListView(QWidget *parent= nullptr);
 
@@ -36,11 +37,21 @@ protected:
     void initButtonList();
 
 private:
-    QList<int> m_listButtons;
+    static QVector<int> m_listButtons;
     QMap<QString, CaptureButton::ButtonType> m_buttonTypeByName;
 
     void updateActiveButtons(QListWidgetItem *);
 
+	void Vector2String(QString& str, QVector<int> &listButtons)
+	{
+//		str.clear();
+//		for (int i = 0; i < listButtons.size(), i++)
+//			str.append()
+	}
+	void String2Vector(QString& str, QVector<int> &listButtons)
+	{
+
+	}
 };
 
 #endif // BUTTONLISTVIEW_H

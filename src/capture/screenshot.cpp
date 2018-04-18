@@ -26,9 +26,9 @@
 #include <QFileDialog>
 #include <QPainter>
 #include <QBuffer>
-#include <QUrlQuery>
-#include <QNetworkRequest>
-#include <QNetworkAccessManager>
+//#include <QUrlQuery>
+//#include <QNetworkRequest>
+//#include <QNetworkAccessManager>
 
 // Screenshot is an extension of QPixmap which lets you manage specific tasks
 

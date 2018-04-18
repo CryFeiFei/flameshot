@@ -63,8 +63,9 @@ void GeneneralConf::initShowHelp() {
                        "in the capture mode."));
     m_layout->addWidget(m_helpMessage);
 
-    connect(m_helpMessage, &QCheckBox::clicked, this,
-            &GeneneralConf::showHelpChanged);
+//    connect(m_helpMessage, &QCheckBox::clicked, this,
+//            &GeneneralConf::showHelpChanged);
+	connect(m_helpMessage, SIGNAL(clicked(bool)), this, SLOT(showHelpChanged(bool)));
 }
 
 void GeneneralConf::initShowDesktopNotification() {
@@ -76,8 +77,9 @@ void GeneneralConf::initShowDesktopNotification() {
     m_sysNotifications->setToolTip(tr("Show desktop notifications"));
     m_layout->addWidget(m_sysNotifications);
 
-    connect(m_sysNotifications, &QCheckBox::clicked, this,
-            &GeneneralConf::showDesktopNotificationChanged);
+//    connect(m_sysNotifications, &QCheckBox::clicked, this,
+//            &GeneneralConf::showDesktopNotificationChanged);
+	connect(m_sysNotifications, SIGNAL(clicked(bool)), this, SLOT(showDesktopNotificationChanged(bool)));
 }
 
 void GeneneralConf::initShowTrayIcon() {
@@ -88,6 +90,7 @@ void GeneneralConf::initShowTrayIcon() {
     m_showTray->setToolTip(tr("Show the systemtray icon"));
     m_layout->addWidget(m_showTray);
 
-    connect(m_showTray, &QCheckBox::clicked, this,
-            &GeneneralConf::showTrayIconChanged);
+//    connect(m_showTray, &QCheckBox::clicked, this,
+//            &GeneneralConf::showTrayIconChanged);
+	connect(m_showTray, SIGNAL(clicked(bool)), this, SLOT(showTrayIconChanged(bool)));
 }

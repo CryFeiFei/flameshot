@@ -33,8 +33,9 @@ namespace {
     // the actual target QT version is QT 5.3
     void doLater(int msec, QObject *receiver, lambda func) {
         QTimer *timer = new QTimer(receiver);
-        QObject::connect(timer, &QTimer::timeout, receiver,
-                         [timer, func](){ func(); timer->deleteLater(); });
+//        QObject::connect(timer, &QTimer::timeout, receiver,
+//                         [timer, func](){ func(); timer->deleteLater(); });
+	QObject::connect(timer, SIGNAL(timeout()), receiver, SLOT(deleteLater()));
         timer->setInterval(msec);
         timer->start();
     }
@@ -44,10 +45,12 @@ FlameshotDBusAdapter::FlameshotDBusAdapter(QObject *parent)
     : QDBusAbstractAdaptor(parent)
 {
     auto controller =  Controller::getInstance();
-    connect(controller, &Controller::captureFailed,
-            this, &FlameshotDBusAdapter::captureFailed);
-    connect(controller, &Controller::captureTaken,
-            this, &FlameshotDBusAdapter::captureTaken);
+//    connect(controller, &Controller::captureFailed,
+//            this, &FlameshotDBusAdapter::captureFailed);
+	connect(controller, SIGNAL(captureFailed(uint)), this, SIGNAL(captureFailed(uint)));
+//    connect(controller, &Controller::captureTaken,
+//            this, &FlameshotDBusAdapter::captureTaken);
+	connect(controller, SIGNAL(captureTaken(uint,QByteArray)), this, SIGNAL(captureTaken(uint,QByteArray)));
 }
 
 FlameshotDBusAdapter::~FlameshotDBusAdapter() {

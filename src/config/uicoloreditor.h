@@ -18,7 +18,7 @@
 #ifndef UICOLORPICKER_H
 #define UICOLORPICKER_H
 
-#include "color_wheel.hpp"
+//#include "color_wheel.hpp"
 #include "src/capture/widget/capturebutton.h"
 #include <QGroupBox>
 
@@ -47,7 +47,7 @@ private:
     CaptureButton *m_buttonContrast;
     ClickableLabel *m_labelContrast;
     CaptureButton *m_lastButtonPressed;
-    color_widgets::ColorWheel *m_colorWheel;
+//    color_widgets::ColorWheel *m_colorWheel;
 
     static const CaptureButton::ButtonType m_buttonIconType = CaptureButton::TYPE_CIRCLE;
 

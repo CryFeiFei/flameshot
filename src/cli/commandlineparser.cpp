@@ -149,9 +149,9 @@ bool CommandLineParser::processOptions(const QStringList &args,
                 arg.remove(0, 2) :
                 arg.remove(0, 1);
     // get option
-    auto endIt = actualNode->options.cend();
+    auto endIt = actualNode->options.end();
     auto optionIt = endIt;
-    for (auto i = actualNode->options.cbegin(); i != endIt; ++i) {
+    for (auto i = actualNode->options.begin(); i != endIt; ++i) {
         if ((*i).names().contains(arg)) {
             optionIt = i;
             break;
@@ -178,7 +178,7 @@ bool CommandLineParser::processOptions(const QStringList &args,
         return ok;
     } else if (requiresValue && valueStr.isEmpty()) {
         // find in the next
-        if (actualIt+1 != args.cend()) {
+	if (actualIt+1 != args.end()) {
             ++actualIt;
         } else {
             out << QString("Expected value after the option '%1'.").arg(arg);
@@ -208,7 +208,7 @@ bool CommandLineParser::parse(const QStringList &args) {
     m_foundOptions.clear();
     bool ok = true;
     Node *actualNode = &m_parseTree;
-    auto it = ++args.cbegin();
+    auto it = ++args.begin();
     // check  version option
     QStringList dashedVersion = addDashToOptionNames(versionOption.names());
     if (m_withVersion && args.length() > 1 &&
@@ -227,7 +227,7 @@ bool CommandLineParser::parse(const QStringList &args) {
     // check  help option
     ok = processIfOptionIsHelp(args, it, actualNode);
     // process the other args
-    for (; it != args.cend() && ok; ++it) {
+    for (; it != args.end() && ok; ++it) {
         const QString &value = *it;
         if (value.startsWith("-")) {
             ok = processOptions(args, it, actualNode);
@@ -395,10 +395,10 @@ bool CommandLineParser::processIfOptionIsHelp(
 {
     bool ok = true;
     auto dashedHelpNames = addDashToOptionNames(helpOption.names());
-    if (m_withHelp && actualIt != args.cend() &&
+    if (m_withHelp && actualIt != args.end() &&
             dashedHelpNames.contains(*actualIt))
     {
-        if (actualIt+1 == args.cend()) {
+	if (actualIt+1 == args.end()) {
             m_foundOptions << helpOption;
             printHelp(args, actualNode);
             actualIt++;

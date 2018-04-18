@@ -51,7 +51,7 @@ public:
     };
 
     CaptureButton() = delete;
-    explicit CaptureButton(const ButtonType, QWidget *parent = nullptr);
+    explicit CaptureButton(const ButtonType, QWidget *parent = NULL);
 
     static size_t buttonBaseSize();
     static bool iconIsWhiteByColor(const QColor &);

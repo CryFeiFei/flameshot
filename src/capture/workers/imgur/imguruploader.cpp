@@ -33,10 +33,10 @@
 #include <QDrag>
 #include <QMimeData>
 #include <QBuffer>
-#include <QUrlQuery>
-#include <QNetworkRequest>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
+//#include <QUrlQuery>
+//#include <QNetworkRequest>
+//#include <QNetworkAccessManager>
+//#include <QNetworkReply>
 #include <QTimer>
 
 ImgurUploader::ImgurUploader(const QPixmap &capture, QWidget *parent) :
@@ -55,9 +55,9 @@ ImgurUploader::ImgurUploader(const QPixmap &capture, QWidget *parent) :
     m_vLayout->addWidget(m_spinner, 0, Qt::AlignHCenter);
     m_vLayout->addWidget(m_infoLabel);
 
-    m_NetworkAM = new QNetworkAccessManager(this);
-    connect(m_NetworkAM, &QNetworkAccessManager::finished, this,
-            &ImgurUploader::handleReply);
+//    m_NetworkAM = new QNetworkAccessManager(this);
+//    connect(m_NetworkAM, &QNetworkAccessManager::finished, this,
+//            &ImgurUploader::handleReply);
 
     setAttribute(Qt::WA_DeleteOnClose);
 
@@ -65,19 +65,19 @@ ImgurUploader::ImgurUploader(const QPixmap &capture, QWidget *parent) :
     // QTimer::singleShot(2000, this, &ImgurUploader::onUploadOk); // testing
 }
 
-void ImgurUploader::handleReply(QNetworkReply *reply) {
-    m_spinner->deleteLater();
-    if (reply->error() == QNetworkReply::NoError) {
-        QString data = QString::fromUtf8(reply->readAll());
-        QString imageID = data.split("\"").at(5);
-        QString url = QString("http://i.imgur.com/%1.png").arg(imageID);
-        m_imageURL.setUrl(url);
-        onUploadOk();
-    } else {
-        m_infoLabel->setText(reply->errorString());
-    }
-    new QShortcut(Qt::Key_Escape, this, SLOT(close()));
-}
+//void ImgurUploader::handleReply(QNetworkReply *reply) {
+//    m_spinner->deleteLater();
+//    if (reply->error() == QNetworkReply::NoError) {
+//        QString data = QString::fromUtf8(reply->readAll());
+//        QString imageID = data.split("\"").at(5);
+//        QString url = QString("http://i.imgur.com/%1.png").arg(imageID);
+//        m_imageURL.setUrl(url);
+//        onUploadOk();
+//    } else {
+//        m_infoLabel->setText(reply->errorString());
+//    }
+//    new QShortcut(Qt::Key_Escape, this, SLOT(close()));
+//}
 
 void ImgurUploader::startDrag() {
     QMimeData *mimeData = new QMimeData;
@@ -96,19 +96,19 @@ void ImgurUploader::upload() {
     QBuffer buffer(&byteArray);
     m_pixmap.save(&buffer, "PNG");
 
-    QUrlQuery urlQuery;
-    urlQuery.addQueryItem("title", "flameshot_screenshot");
-    QString description = FileNameHandler().parsedPattern();
-    urlQuery.addQueryItem("description", description);
+//    QUrlQuery urlQuery;
+//    urlQuery.addQueryItem("title", "flameshot_screenshot");
+//    QString description = FileNameHandler().parsedPattern();
+//    urlQuery.addQueryItem("description", description);
 
-    QUrl url("https://api.imgur.com/3/image");
-    url.setQuery(urlQuery);
-    QNetworkRequest request(url);
-    request.setHeader(QNetworkRequest::ContentTypeHeader,
-                      "application/application/x-www-form-urlencoded");
-    request.setRawHeader("Authorization", "Client-ID 313baf0c7b4d3ff");
+//    QUrl url("https://api.imgur.com/3/image");
+//    url.setQuery(urlQuery);
+//    QNetworkRequest request(url);
+ //   request.setHeader(QNetworkRequest::ContentTypeHeader,
+ //                     "application/application/x-www-form-urlencoded");
+//    request.setRawHeader("Authorization", "Client-ID 313baf0c7b4d3ff");
 
-    m_NetworkAM->post(request, byteArray);
+//    m_NetworkAM->post(request, byteArray);
 }
 
 void ImgurUploader::onUploadOk() {
@@ -120,7 +120,7 @@ void ImgurUploader::onUploadOk() {
     ImageLabel *imageLabel = new ImageLabel();
     imageLabel->setScreenshot(m_pixmap);
     imageLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    connect(imageLabel, &ImageLabel::dragInitiated, this, &ImgurUploader::startDrag);
+//    connect(imageLabel, &ImageLabel::dragInitiated, this, &ImgurUploader::startDrag);
     m_vLayout->addWidget(imageLabel);
 
     m_hLayout = new QHBoxLayout();
@@ -133,12 +133,12 @@ void ImgurUploader::onUploadOk() {
     m_hLayout->addWidget(m_openUrlButton);
     m_hLayout->addWidget(m_toClipboardButton);
 
-    connect(m_copyUrlButton, &QPushButton::clicked,
-            this, &ImgurUploader::copyURL);
-    connect(m_openUrlButton, &QPushButton::clicked,
-            this, &ImgurUploader::openURL);
-    connect(m_toClipboardButton, &QPushButton::clicked,
-            this, &ImgurUploader::copyImage);
+//    connect(m_copyUrlButton, &QPushButton::clicked,
+//            this, &ImgurUploader::copyURL);
+//    connect(m_openUrlButton, &QPushButton::clicked,
+//            this, &ImgurUploader::openURL);
+//    connect(m_toClipboardButton, &QPushButton::clicked,
+//            this, &ImgurUploader::copyImage);
 
 }
 

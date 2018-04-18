@@ -20,6 +20,8 @@
 
 #include <QObject>
 #include <QVector>
+#include <QColor>
+#include <QPoint>
 
 class QPainter;
 

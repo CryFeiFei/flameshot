@@ -16,7 +16,7 @@
 //     along with Flameshot.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "src/core/controller.h"
-#include "singleapplication.h"
+//#include "singleapplication.h"
 #include "src/core/flameshotdbusadapter.h"
 #include "src/utils/filenamehandler.h"
 #include "src/utils/confighandler.h"
@@ -42,22 +42,22 @@ int main(int argc, char *argv[]) {
 
     // no arguments, just launch Flameshot
     if (argc == 1) {
-        SingleApplication app(argc, argv);
-        app.installTranslator(&translator);
-        app.setAttribute(Qt::AA_DontCreateNativeWidgetSiblings, true);
-        app.setApplicationName("flameshot");
-        app.setOrganizationName("Dharkael");
+	QCoreApplication app(argc, argv);
+	app.installTranslator(&translator);
+	app.setAttribute(Qt::AA_DontCreateNativeWidgetSiblings, true);
+	app.setApplicationName("flameshot");
+	app.setOrganizationName("Dharkael");
 
-        auto c = Controller::getInstance();
-        new FlameshotDBusAdapter(c);
-        QDBusConnection dbus = QDBusConnection::sessionBus();
-        if (!dbus.isConnected()) {
-            SystemNotification().sendMessage(
-                        QObject::tr("Unable to connect via DBus"));
-        }
-        dbus.registerObject("/", c);
-        dbus.registerService("org.dharkael.Flameshot");
-        return app.exec();
+	auto c = Controller::getInstance();
+	new FlameshotDBusAdapter(c);
+	QDBusConnection dbus = QDBusConnection::sessionBus();
+	if (!dbus.isConnected()) {
+	    SystemNotification().sendMessage(
+			QObject::tr("Unable to connect via DBus"));
+	}
+	dbus.registerObject("/", c);
+	dbus.registerService("org.dharkael.Flameshot");
+	return app.exec();
     }
 
     /*--------------|
@@ -201,8 +201,7 @@ int main(int argc, char *argv[]) {
                                SLOT(captureFailed(uint)));
             QTimer t;
             t.setInterval(1000 * 60 * 15); // 15 minutes timeout
-            QObject::connect(&t, &QTimer::timeout, qApp,
-                             &QCoreApplication::quit);
+	    QObject::connect(&t, SIGNAL(timeout()), qApp, SLOT(QApplication::quit()));
             t.start();
             // wait
             app.exec();
@@ -245,8 +244,7 @@ int main(int argc, char *argv[]) {
             // timeout just in case
             QTimer t;
             t.setInterval(2000);
-            QObject::connect(&t, &QTimer::timeout, qApp,
-                             &QCoreApplication::quit);
+	    QObject::connect(&t, SIGNAL(timeout()), qApp, SLOT(QCoreApplication::quit));
             t.start();
             // wait
             app.exec();

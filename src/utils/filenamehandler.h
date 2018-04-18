@@ -25,7 +25,7 @@ class FileNameHandler : public QObject
 {
     Q_OBJECT
 public:
-    explicit FileNameHandler(QObject *parent = nullptr);
+    explicit FileNameHandler(QObject *parent = NULL);
 
     QString parsedPattern();
     QString parseFilename(const QString &name);

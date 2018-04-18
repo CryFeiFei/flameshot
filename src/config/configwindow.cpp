@@ -47,8 +47,10 @@ ConfigWindow::ConfigWindow(QWidget *parent) : QTabWidget(parent) {
     };
     m_configWatcher = new QFileSystemWatcher(this);
     m_configWatcher->addPath(ConfigHandler().configFilePath());
-    connect(m_configWatcher, &QFileSystemWatcher::fileChanged,
-            this, changedSlot);
+//    connect(m_configWatcher, &QFileSystemWatcher::fileChanged,
+//            this, changedSlot);
+
+	    connect(m_configWatcher, SIGNAL(fileChanged(QString)), this, SLOT(changedSlot));
 
     QColor background = this->palette().background().color();
     bool isWhite = CaptureButton::iconIsWhiteByColor(background);
@@ -69,8 +71,10 @@ ConfigWindow::ConfigWindow(QWidget *parent) : QTabWidget(parent) {
     listLayout->addWidget(m_buttonList);
 
     QPushButton* setAllButtons = new QPushButton(tr("Select All"));
-    connect(setAllButtons, &QPushButton::clicked,
-            m_buttonList, &ButtonListView::selectAll);
+//    connect(setAllButtons, &QPushButton::clicked,
+//            m_buttonList, &ButtonListView::selectAll);
+
+	connect(setAllButtons, SIGNAL(clicked(bool)), m_buttonList, SLOT(selectAll()));
     listLayout->addWidget(setAllButtons);
 
     addTab(visuals, tr("Interface"));
@@ -87,14 +91,19 @@ ConfigWindow::ConfigWindow(QWidget *parent) : QTabWidget(parent) {
     setTabIcon(2, QIcon(modifier + "config.png"));
 
     // connect update sigslots
-    connect(this, &ConfigWindow::updateChildren,
-            m_filenameEditor, &FileNameEditor::updateComponents);
-    connect(this, &ConfigWindow::updateChildren,
-            m_colorEditor, &UIcolorEditor::updateComponents);
-    connect(this, &ConfigWindow::updateChildren,
-            m_buttonList, &ButtonListView::updateComponents);
-    connect(this, &ConfigWindow::updateChildren,
-            m_generalConfig, &GeneneralConf::updateComponents);
+//    connect(this, &ConfigWindow::updateChildren,
+//            m_filenameEditor, &FileNameEditor::updateComponents);
+//    connect(this, &ConfigWindow::updateChildren,
+//            m_colorEditor, &UIcolorEditor::updateComponents);
+//    connect(this, &ConfigWindow::updateChildren,
+//            m_buttonList, &ButtonListView::updateComponents);
+//    connect(this, &ConfigWindow::updateChildren,
+//            m_generalConfig, &GeneneralConf::updateComponents);
+
+	connect(this, SIGNAL(updateChildren()), m_filenameEditor, SLOT(updateComponents()));
+	connect(this, SIGNAL(updateChildren()), m_colorEditor, SLOT(updateComponents()));
+	connect(this, SIGNAL(updateChildren()), m_buttonList, SLOT(updateComponents()));
+	connect(this, SIGNAL(updateChildren()), m_generalConfig, SLOT(updateComponents()));
 }
 
 void ConfigWindow::updateComponents() {

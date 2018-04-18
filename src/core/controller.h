@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QPointer>
 #include <QPixmap>
+#include <QMenu>
 
 class CaptureWidget;
 class ConfigWindow;
@@ -64,7 +65,6 @@ private:
     QPointer<InfoWindow> m_infoWindow;
     QPointer<ConfigWindow> m_configWindow;
     QPointer<QSystemTrayIcon> m_trayIcon;
-
 };
 
 #endif // CONTROLLER_H

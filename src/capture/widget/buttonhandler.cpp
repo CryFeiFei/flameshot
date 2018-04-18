@@ -338,7 +338,7 @@ QVector<QPoint> ButtonHandler::horizontalPoints(
     int x = leftToRight ? center.x() - shift :
                           center.x() + shift;
     QPoint i(x, center.y());
-    while (elements > res.length()) {
+    while (elements > res.size()) {
         res.append(i);
         leftToRight ? i.setX(i.x() + m_distance) :
                       i.setX(i.x() - m_distance);
@@ -364,7 +364,7 @@ QVector<QPoint> ButtonHandler::verticalPoints(
     int y = upToDown ? center.y() - shift :
                        center.y() + shift;
     QPoint i(center.x(), y);
-    while (elements > res.length()) {
+    while (elements > res.size()) {
         res.append(i);
         upToDown ? i.setY(i.y() + m_distance) :
                       i.setY(i.y() - m_distance);

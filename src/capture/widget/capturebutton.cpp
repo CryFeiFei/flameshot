@@ -63,7 +63,8 @@ CaptureButton::CaptureButton(const ButtonType t, QWidget *parent) : QPushButton(
 
 void CaptureButton::initButton() {
     m_tool = ToolFactory().CreateTool(m_buttonType, this);
-    connect(this, &CaptureButton::pressed, m_tool, &CaptureTool::onPressed);
+//    connect(this, &CaptureButton::pressed, m_tool, &CaptureTool::onPressed);
+	connect(this, SIGNAL(pressed()), m_tool, SLOT(onPressed()));
 
     setFocusPolicy(Qt::NoFocus);
     resize(BUTTON_SIZE, BUTTON_SIZE);
@@ -138,11 +139,13 @@ void CaptureButton::mousePressEvent(QMouseEvent *e) {
 }
 
 void CaptureButton::animatedShow() {
-    if(!isVisible()) {
+    if(!isVisible())
+    {
         show();
         m_emergeAnimation->start();
-        connect(m_emergeAnimation, &QPropertyAnimation::finished, this, [this](){
-        });
+//        connect(m_emergeAnimation, &QPropertyAnimation::finished, this, [this](){
+//        });
+	connect(m_emergeAnimation, SIGNAL(finished()), this, SLOT(close()));
     }
 }
 

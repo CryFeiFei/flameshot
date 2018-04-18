@@ -19,7 +19,8 @@
 #include "src/utils/confighandler.h"
 #include <ctime>
 #include <locale>
-#include <QStandardPaths>
+//#include <QStandardPaths>
+#include <QDesktopServices>
 #include <QDir>
 
 FileNameHandler::FileNameHandler(QObject *parent) : QObject(parent) {
@@ -64,8 +65,10 @@ void FileNameHandler::setPattern(const QString &pattern) {
 QString FileNameHandler::absoluteSavePath(QString &directory, QString &filename) {
     ConfigHandler config;
     directory = config.savePathValue();
-    if (directory.isEmpty() || !QDir(directory).exists() || !QFileInfo(directory).isWritable()) {
-        directory = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+    if (directory.isEmpty() || !QDir(directory).exists() || !QFileInfo(directory).isWritable())
+    {
+//        directory = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+	directory = QDesktopServices::storageLocation(QDesktopServices::PicturesLocation);
     }
     filename = parsedPattern();
     fixPath(directory, filename);

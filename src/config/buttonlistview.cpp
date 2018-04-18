@@ -22,13 +22,17 @@
 #include <QSettings>
 #include <algorithm>
 
+QVector<int> ButtonListView::m_listButtons;
+
 ButtonListView::ButtonListView(QWidget *parent) : QListWidget(parent) {
     setMouseTracking(true);
     setFlow(QListWidget::TopToBottom);
     initButtonList();
     updateComponents();
-    connect(this, &QListWidget::itemClicked, this,
-            &ButtonListView::reverseItemCheck);
+//    connect(this, &QListWidget::itemClicked, this,
+//            &ButtonListView::reverseItemCheck);
+	connect(this, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(reverseItemCheck(QListWidgetItem*)));
+	m_listButtons.clear();
 }
 
 void ButtonListView::initButtonList() {
@@ -73,9 +77,10 @@ void ButtonListView::updateActiveButtons(QListWidgetItem *item) {
         m_listButtons.append(buttonIndex);
         std::sort(m_listButtons.begin(), m_listButtons.end());
     } else {
-        m_listButtons.removeOne(buttonIndex);
+	m_listButtons.remove(buttonIndex);
     }
-    QSettings().setValue("buttons", QVariant::fromValue(m_listButtons));
+//    QVariant var = QVariant::fromValue(m_listButtons);
+//    QSettings().setValue("buttons", QVariant::fromValue(m_listButtons));
 }
 
 void ButtonListView::reverseItemCheck(QListWidgetItem *item){
@@ -96,7 +101,7 @@ void ButtonListView::selectAll() {
 }
 
 void ButtonListView::updateComponents() {
-    m_listButtons = QSettings().value("buttons").value<QList<int> >();
+//    m_listButtons = QSettings().value("buttons").value<QVector<int> >();
     auto listTypes = CaptureButton::getIterableButtonTypes();
     for(int i = 0; i < this->count(); ++i) {
         QListWidgetItem* item = this->item(i);

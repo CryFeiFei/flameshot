@@ -21,19 +21,20 @@
 ConfigHandler::ConfigHandler(){
 }
 
-QList<CaptureButton::ButtonType> ConfigHandler::getButtons() {
-    QList<int> buttons = m_settings.value("buttons").value<QList<int> >();
-    bool modified = normalizeButtons(buttons);
-    if (modified) {
-        m_settings.setValue("buttons", QVariant::fromValue(buttons));
-    }
-    return fromIntToButton(buttons);
+QList<CaptureButton::ButtonType> ConfigHandler::getButtons()
+{
+//    QList<int> buttons = m_settings.value("buttons").value<QList<int> >();
+//    bool modified = normalizeButtons(buttons);
+//    if (modified) {
+//        m_settings.setValue("buttons", QVariant::fromValue(buttons));
+//    }
+//    return fromIntToButton(buttons);
 }
 
 void ConfigHandler::setButtons(const QList<CaptureButton::ButtonType> &buttons) {
-    QList<int> l = fromButtonToInt(buttons);
-    normalizeButtons(l);
-    m_settings.setValue("buttons", QVariant::fromValue(l));
+//    QList<int> l = fromButtonToInt(buttons);
+//    normalizeButtons(l);
+//    m_settings.setValue("buttons", QVariant::fromValue(l));
 }
 
 QString ConfigHandler::savePathValue() {
@@ -45,7 +46,8 @@ void ConfigHandler::setSavePath(const QString &savePath) {
 }
 
 QColor ConfigHandler::uiMainColorValue() {
-    return m_settings.value("uiColor").value<QColor>();
+//    return m_settings.value("uiColor").value<QColor>();
+	return QColor();
 }
 
 void ConfigHandler::setUIMainColor(const QColor &c) {
@@ -53,7 +55,8 @@ void ConfigHandler::setUIMainColor(const QColor &c) {
 }
 
 QColor ConfigHandler::uiContrastColorValue() {
-    return m_settings.value("contastUiColor").value<QColor>();
+//    return m_settings.value("contastUiColor").value<QColor>();
+	return QColor();
 }
 
 void ConfigHandler::setUIContrastColor(const QColor &c) {
@@ -61,7 +64,8 @@ void ConfigHandler::setUIContrastColor(const QColor &c) {
 }
 
 QColor ConfigHandler::drawColorValue() {
-    return m_settings.value("drawColor").value<QColor>();
+//    return m_settings.value("drawColor").value<QColor>();
+	return QColor();
 }
 
 void ConfigHandler::setDrawColor(const QColor &c) {
@@ -135,7 +139,7 @@ void ConfigHandler::setAllTheButtons() {
     for (const CaptureButton::ButtonType t: listTypes) {
         buttons << static_cast<int>(t);
     }
-    m_settings.setValue("buttons", QVariant::fromValue(buttons));
+//    m_settings.setValue("buttons", QVariant::fromValue(buttons));
 }
 
 QString ConfigHandler::configFilePath() const {

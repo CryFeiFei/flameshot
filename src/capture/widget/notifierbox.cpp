@@ -25,7 +25,8 @@ NotifierBox::NotifierBox(QWidget *parent) : QWidget(parent) {
     m_timer = new QTimer(this);
     m_timer->setSingleShot(true);
     m_timer->setInterval(1200);
-    connect(m_timer, &QTimer::timeout, this, &NotifierBox::hide);
+//    connect(m_timer, &QTimer::timeout, this, &NotifierBox::hide);
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(hide()));
     m_bgColor = ConfigHandler().uiMainColorValue();
     m_foregroundColor = (CaptureButton::iconIsWhiteByColor(m_bgColor) ?
                              Qt::white : Qt::black);

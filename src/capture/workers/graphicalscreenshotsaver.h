@@ -37,6 +37,7 @@ private:
 
     void initFileDialog();
     void showErrorMessage(const QString &msg);
+public slots:
     void checkSaveAcepted();
 };
 

@@ -21,8 +21,8 @@
 #include <QWidget>
 #include <QUrl>
 
-class QNetworkReply;
-class QNetworkAccessManager;
+//class QNetworkReply;
+//class QNetworkAccessManager;
 class QHBoxLayout;
 class QVBoxLayout;
 class QLabel;
@@ -38,7 +38,7 @@ public:
     explicit ImgurUploader(const QPixmap &p, QWidget *parent = nullptr);
 
 private slots:
-    void handleReply(QNetworkReply *reply);
+//    void handleReply(QNetworkReply *reply);
     void startDrag();
 
     void openURL();
@@ -47,7 +47,7 @@ private slots:
 
 private:
     QPixmap m_pixmap;
-    QNetworkAccessManager *m_NetworkAM;
+//    QNetworkAccessManager *m_NetworkAM;
 
     QVBoxLayout *m_vLayout;
     QHBoxLayout *m_hLayout;

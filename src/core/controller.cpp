@@ -30,7 +30,7 @@
 // Controller is the core component of Flameshot, creates the trayIcon and
 // launches the capture widget
 
-Controller::Controller() : m_captureWindow(nullptr)
+Controller::Controller() : m_captureWindow(nullptr), m_infoWindow(nullptr), m_configWindow(nullptr), m_trayIcon(nullptr)
 {
     qApp->setQuitOnLastWindowClosed(false);
 
@@ -99,19 +99,15 @@ void Controller::enableTrayIcon() {
     }
     ConfigHandler().setDisabledTrayIcon(false);
     QAction *useIt = new QAction(tr("&useIt"), this);
-    connect(useIt, &QAction::triggered, this,
-            &Controller::showScreenShot);
+	connect(useIt, SIGNAL(triggered(bool)), this, SLOT(showScreenShot()));
     QAction *configAction = new QAction(tr("&Configuration"), this);
-    connect(configAction, &QAction::triggered, this,
-            &Controller::openConfigWindow);
+	connect(configAction, SIGNAL(triggered(bool)), this, SLOT(openConfigWindow()));
     QAction *infoAction = new QAction(tr("&Information"), this);
-    connect(infoAction, &QAction::triggered, this,
-            &Controller::openInfoWindow);
+	connect(infoAction, SIGNAL(triggered(bool)), this, SLOT(openInfoWindow()));
     QAction *quitAction = new QAction(tr("&Quit"), this);
-    connect(quitAction, &QAction::triggered, qApp,
-            &QCoreApplication::quit);
+//	connect(quitAction, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
 
-    QMenu *trayIconMenu = new QMenu();
+    QMenu*trayIconMenu  = new QMenu();
     trayIconMenu->addAction(useIt);
     trayIconMenu->addAction(configAction);
     trayIconMenu->addAction(infoAction);
@@ -120,7 +116,7 @@ void Controller::enableTrayIcon() {
 
     m_trayIcon = new QSystemTrayIcon();
     m_trayIcon->setToolTip("Flameshot");
-    m_trayIcon->setContextMenu(trayIconMenu);
+   m_trayIcon->setContextMenu(trayIconMenu);
     m_trayIcon->setIcon(QIcon(":img/flameshot.png"));
 
 //    auto trayIconActivated = [this](QSystemTrayIcon::ActivationReason r){

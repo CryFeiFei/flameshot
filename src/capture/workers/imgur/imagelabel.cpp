@@ -44,10 +44,11 @@ void ImageLabel::setScreenshot(const QPixmap &pixmap) {
 }
 
 void ImageLabel::setScaledPixmap() {
-    const qreal scale = qApp->devicePixelRatio();
+//    const qreal scale = qApp->devicePixelRatio();
+    const qreal scale = 1;
     QPixmap scaledPixmap = m_pixmap.scaled(size() * scale, Qt::KeepAspectRatio,
                                            Qt::SmoothTransformation);
-    scaledPixmap.setDevicePixelRatio(scale);
+//    scaledPixmap.setDevicePixelRatio(scale);
     setPixmap(scaledPixmap);
 }
 
@@ -71,13 +72,13 @@ void ImageLabel::mouseMoveEvent(QMouseEvent *event)
     if (!(event->buttons() & Qt::LeftButton)) {
         return;
     }
-    if ((event->pos() - m_dragStartPosition).manhattanLength() <
-            QGuiApplication::styleHints()->startDragDistance())
-    {
-        return;
-    }
+//    if ((event->pos() - m_dragStartPosition).manhattanLength() <
+//            QGuiApplication::styleHints()->startDragDistance())
+//    {
+//        return;
+//    }
     setCursor(Qt::OpenHandCursor);
-    emit dragInitiated();
+ //   emit dragInitiated();
 }
 
 // resize handler

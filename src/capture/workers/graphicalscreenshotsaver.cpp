@@ -56,16 +56,19 @@ void GraphicalScreenshotSaver::initFileDialog() {
     m_fileDialog->setDirectory(directory);
 
     QStringList mimeTypes;
-    for (const QByteArray &bf: QImageWriter::supportedMimeTypes())
-        mimeTypes.append(QLatin1String(bf));
-    m_fileDialog->setMimeTypeFilters(mimeTypes);
-    m_fileDialog->selectMimeTypeFilter("image/png");
+//    for (const QByteArray &bf: QImageWriter::supportedMimeTypes())
+//        mimeTypes.append(QLatin1String(bf));
+//    m_fileDialog->setMimeTypeFilters(mimeTypes);
+//    m_fileDialog->selectMimeTypeFilter("image/png");
+    m_fileDialog->setFilter("png");
     m_fileDialog->setDefaultSuffix("png");
 
-    connect(m_fileDialog, &QFileDialog::rejected,
-            this, &GraphicalScreenshotSaver::close);
-    connect(m_fileDialog, &QFileDialog::accepted,
-            this, &GraphicalScreenshotSaver::checkSaveAcepted);
+//    connect(m_fileDialog, &QFileDialog::rejected,
+//            this, &GraphicalScreenshotSaver::close);
+	    connect(m_fileDialog, SIGNAL(rejected()), this, SLOT(close()));
+//   connect(m_fileDialog, &QFileDialog::accepted,
+//	    this, &GraphicalScreenshotSaver::checkSaveAcepted);
+		connect(m_fileDialog, SIGNAL(accepted()), this, SLOT(checkSaveAcepted()));
 }
 
 void GraphicalScreenshotSaver::showErrorMessage(const QString &msg) {

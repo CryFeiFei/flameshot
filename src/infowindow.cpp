@@ -86,7 +86,7 @@ void InfoWindow::initInfoTable() {
     table->setMinimumWidth(400);
     table->setMaximumWidth(600);
 
-    table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+//    table->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
     table->horizontalHeader()->setSizePolicy(QSizePolicy::Expanding,
                                              QSizePolicy::Expanding);
     m_layout->addStretch();

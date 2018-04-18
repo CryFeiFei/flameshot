@@ -29,7 +29,8 @@ NotificationWidget::NotificationWidget(QWidget *parent) : QWidget(parent)
     m_timer = new QTimer(this);
     m_timer->setSingleShot(true);
     m_timer->setInterval(7000);
-    connect(m_timer, &QTimer::timeout, this, &NotificationWidget::animatedHide);
+//    connect(m_timer, &QTimer::timeout, this, &NotificationWidget::animatedHide);
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(animatedHide()));
 
     m_content = new QFrame();
     m_layout = new QVBoxLayout();
@@ -41,7 +42,8 @@ NotificationWidget::NotificationWidget(QWidget *parent) : QWidget(parent)
 
     m_hideAnimation = new QPropertyAnimation(m_content, "geometry", this);
     m_hideAnimation->setDuration(300);
-    connect(m_hideAnimation, &QPropertyAnimation::finished, m_label, &QLabel::hide);
+//    connect(m_hideAnimation, &QPropertyAnimation::finished, m_label, &QLabel::hide);
+    connect(m_hideAnimation, SIGNAL(finished()), m_label, SLOT(hide()));
 
     auto mainLayout = new QVBoxLayout();
     setLayout(mainLayout);

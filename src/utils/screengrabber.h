@@ -20,6 +20,7 @@
 
 #include "src/utils/desktopinfo.h"
 #include <QObject>
+#include <QPixmap>
 
 class ScreenGrabber : public QObject
 {

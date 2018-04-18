@@ -41,16 +41,16 @@ UIcolorEditor::UIcolorEditor(QWidget *parent) : QGroupBox(parent) {
 }
 
 void UIcolorEditor::updateComponents() {
-    ConfigHandler config;
-    m_uiColor = config.uiMainColorValue();
-    m_contrastColor = config.uiContrastColorValue();
-    if (m_lastButtonPressed == m_buttonMainColor) {
-        m_colorWheel->setColor(m_uiColor);
-    } else {
-        m_colorWheel->setColor(m_contrastColor);
-    }
-    m_buttonContrast->setColor(m_contrastColor);
-    m_buttonMainColor->setColor(m_uiColor);
+//    ConfigHandler config;
+//    m_uiColor = config.uiMainColorValue();
+//    m_contrastColor = config.uiContrastColorValue();
+//    if (m_lastButtonPressed == m_buttonMainColor) {
+//        m_colorWheel->setColor(m_uiColor);
+//    } else {
+//        m_colorWheel->setColor(m_contrastColor);
+//    }
+//    m_buttonContrast->setColor(m_contrastColor);
+//    m_buttonMainColor->setColor(m_uiColor);
 }
 
 // updateUIcolor updates the appearance of the buttons
@@ -74,19 +74,19 @@ void UIcolorEditor::updateLocalColor(const QColor c) {
 }
 
 void UIcolorEditor::initColorWheel() {
-    m_colorWheel = new color_widgets::ColorWheel(this);
-    connect(m_colorWheel, &color_widgets::ColorWheel::mouseReleaseOnColor, this,
-            &UIcolorEditor::updateUIcolor);
-    connect(m_colorWheel, &color_widgets::ColorWheel::colorChanged, this,
-            &UIcolorEditor::updateLocalColor);
+//    m_colorWheel = new color_widgets::ColorWheel(this);
+//    connect(m_colorWheel, &color_widgets::ColorWheel::mouseReleaseOnColor, this,
+//            &UIcolorEditor::updateUIcolor);
+//    connect(m_colorWheel, &color_widgets::ColorWheel::colorChanged, this,
+//            &UIcolorEditor::updateLocalColor);
 
-    m_colorWheel->setMinimumSize(100, 100);
-    m_colorWheel->setMaximumSize(170, 170);
-    m_colorWheel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    m_colorWheel->setToolTip(tr("Change the color moving the selectors and see"
-                                " the changes in the preview buttons."));
+//    m_colorWheel->setMinimumSize(100, 100);
+//    m_colorWheel->setMaximumSize(170, 170);
+//    m_colorWheel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+//    m_colorWheel->setToolTip(tr("Change the color moving the selectors and see"
+//                                " the changes in the preview buttons."));
 
-    m_hLayout->addWidget(m_colorWheel);
+//    m_hLayout->addWidget(m_colorWheel);
 }
 
 void UIcolorEditor::initButtons() {
@@ -125,15 +125,19 @@ void UIcolorEditor::initButtons() {
     m_buttonContrast->setToolTip(tr("Click on this button to set the edition"
                                       " mode of the contrast color."));
 
-    connect(m_buttonMainColor, &CaptureButton::pressedButton,
-            this, &UIcolorEditor::changeLastButton);
-    connect(m_buttonContrast, &CaptureButton::pressedButton,
-            this, &UIcolorEditor::changeLastButton);
+//    connect(m_buttonMainColor, &CaptureButton::pressedButton,
+//            this, &UIcolorEditor::changeLastButton);
+	connect(m_buttonMainColor, SIGNAL(pressedButton(CaptureButton*)), this, SLOT(changeLastButton(CaptureButton*)));
+//    connect(m_buttonContrast, &CaptureButton::pressedButton,
+//            this, &UIcolorEditor::changeLastButton);
+//	connect(m_buttonContrast, &CaptureButton::pressedButton, this, &UIcolorEditor::changeLastButton);
+	connect(m_buttonMainColor, SIGNAL(pressedButton(CaptureButton*)), this, SLOT(changeLastButton(CaptureButton*)));
     // clicking the labels chages the button too
-    connect(m_labelMain, &ClickableLabel::clicked,
-            this, [this]{ changeLastButton(m_buttonMainColor); });
-    connect(m_labelContrast, &ClickableLabel::clicked,
-            this, [this]{ changeLastButton(m_buttonContrast); });
+//    connect(m_labelMain, &ClickableLabel::clicked,
+//            this, [this]{ changeLastButton(m_buttonMainColor); });
+//	connect(m_labelMain, SIGNAL(clicked()), m_buttonMainColor, this, SLOT( [this]{ changeLastButton(m_buttonMainColor);});
+//    connect(m_labelContrast, &ClickableLabel::clicked,
+//            this, [this]{ changeLastButton(m_buttonContrast); });
     m_lastButtonPressed = m_buttonMainColor;
 }
 
@@ -145,15 +149,15 @@ void UIcolorEditor::changeLastButton(CaptureButton *b) {
 
         QString offStyle("QLabel { color : gray; }");
 
-        if (b == m_buttonMainColor) {
-            m_colorWheel->setColor(m_uiColor);
-            m_labelContrast->setStyleSheet(offStyle);
-            m_labelMain->setStyleSheet(styleSheet());
-        } else {
-            m_colorWheel->setColor(m_contrastColor);
-            m_labelContrast->setStyleSheet(styleSheet());
-            m_labelMain->setStyleSheet(offStyle);
-        }
+//        if (b == m_buttonMainColor) {
+//            m_colorWheel->setColor(m_uiColor);
+//            m_labelContrast->setStyleSheet(offStyle);
+//            m_labelMain->setStyleSheet(styleSheet());
+//        } else {
+//            m_colorWheel->setColor(m_contrastColor);
+//            m_labelContrast->setStyleSheet(styleSheet());
+//            m_labelMain->setStyleSheet(offStyle);
+//        }
         b->setIcon(b->icon());
     }
 }
