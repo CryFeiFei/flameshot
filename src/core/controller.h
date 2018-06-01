@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QPointer>
 #include <QPixmap>
+#include "../third-party/qxtglobalshortcut5/gui/qxtglobalshortcut.h"
 
 class CaptureWidget;
 class ConfigWindow;

@@ -67,7 +67,8 @@ void Controller::showScreenShot()
 }
 
 // creation of a new capture in GUI mode
-void Controller::createVisualCapture(const uint id, const QString &forcedSavePath) {
+void Controller::createVisualCapture(const uint id, const QString &forcedSavePath)
+{
     if (!m_captureWindow) {
         m_captureWindow = new CaptureWidget(id, forcedSavePath);
         connect(m_captureWindow, SIGNAL(CaptureWidget::captureFailed),
@@ -122,6 +123,9 @@ void Controller::enableTrayIcon() {
     m_trayIcon->setToolTip("Flameshot");
     m_trayIcon->setContextMenu(trayIconMenu);
     m_trayIcon->setIcon(QIcon(":img/flameshot.png"));
+
+	QxtGlobalShortcut * sc = new QxtGlobalShortcut(QKeySequence("Ctrl+Alt+A"), this);
+	connect(sc, SIGNAL(activated()),this, SLOT(showScreenShot()));
 
 //    auto trayIconActivated = [this](QSystemTrayIcon::ActivationReason r){
 //        if (r == QSystemTrayIcon::Trigger) {

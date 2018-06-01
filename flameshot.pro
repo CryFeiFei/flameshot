@@ -34,6 +34,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 include(src/third-party/singleapplication/singleapplication.pri)
 include(src/third-party/Qt-Color-Widgets//color_widgets.pri)
+include(src/third-party/qxtglobalshortcut5/qxt.pri)
 
 DEFINES += QAPPLICATION_CLASS=QApplication
 
